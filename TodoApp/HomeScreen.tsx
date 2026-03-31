@@ -1,10 +1,136 @@
 import React from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, FlatList, StyleSheet } from "react-native";
+import data from "./data.json";
 
+//forLoop(v1)
+// const HomeScreen = () => {
+//   return (
+//     <View style={styles.container}>
+//       <Text style={styles.header}>Todo List (For Loop)</Text>
+//       {(() => {
+//         const items = [];
+//         for (let i = 0; i < data.length; i++) {
+//           const item = data[i];
+//           const date = new Date(item.createdAt);
+//           const formattedDate = date.toLocaleDateString();
+//           const formattedTime = date.toLocaleTimeString();
+//           items.push(
+//             <View style={styles.itemContainer}>
+//               <Text style={styles.title}>{item.title}</Text>
+//               <Text style={styles.description} >{item.description}</Text>
+//               <Text style={styles.meta}>By: {item.user} - Comment: {item.commentCount}</Text>
+//               <Text style={styles.meta}>{formattedDate} {formattedTime}</Text>
+//             </View>
+
+//           )
+//         }
+//         return items;
+//       })()}
+//     </View>
+//   );
+// };
+
+//forLoop(v2)
+// const HomeScreen = () => {
+//   const todoItems = [];
+//   for (let i = 0; i < data.length; i++) {
+//     const item = data[i];
+//     const date = new Date(item.createdAt);
+//     const formattedDate = date.toLocaleDateString();
+//     const formattedTime = date.toLocaleTimeString();
+//     todoItems.push(
+//       <View style={styles.itemContainer}>
+//         <Text style={styles.title}>{item.title}</Text>
+//         <Text style={styles.description}>{item.description}</Text>
+//         <Text style={styles.meta}>
+//           By: {item.user} - Comment: {item.commentCount}
+//         </Text>
+//         <Text style={styles.meta}>
+//           {formattedDate} {formattedTime}
+//         </Text>
+//       </View>,
+//     );
+//   }
+//   return (
+//     <View style={styles.container}>
+//       <Text style={styles.header}>Todo List (For Loop)</Text>
+//       {todoItems}
+//     </View>
+//   );
+// };
+
+//map method 3
+// const HomeScreen = () => {
+//   return (
+//     <View style={styles.container}>
+//       <Text style={styles.header}>Todo List (For Loop)</Text>
+//       {data.map((item) => {
+//         const date = new Date(item.createdAt);
+//         const formattedDate = date.toLocaleDateString();
+//         const formattedTime = date.toLocaleTimeString();
+//         return (
+//           <View style={styles.itemContainer}>
+//             <Text style={styles.title}>{item.title}</Text>
+//             <Text style={styles.description}>{item.description}</Text>
+//             <Text style={styles.meta}>
+//               By: {item.user} - Comment: {item.commentCount}
+//             </Text>
+//             <Text style={styles.meta}>
+//               {formattedDate} {formattedTime}
+//             </Text>
+//           </View>
+//         );
+//       })}
+//     </View>
+//   );
+// };
+
+// flat List
 const HomeScreen = () => {
+  const renderItem = ({ item }) => {
+    const date = new Date(item.createdAt);
+    const formattedDate = date.toLocaleDateString();
+    const formattedTime = date.toLocaleTimeString();
+    return(<View style={styles.itemContainer}>
+        <Text style={styles.title}>{item.title}</Text>
+        <Text style={styles.description}>{item.description}</Text>
+        <Text style={styles.meta}>
+          By: {item.user} - Comment: {item.commentCount}
+        </Text>
+        <Text style={styles.meta}>
+          {formattedDate} {formattedTime}
+        </Text>
+      </View>
+      );
+  };
+
+  // const todoItems = [];
+  // for (let i = 0; i < data.length; i++) {
+  //   const item = data[i];
+  //   const date = new Date(item.createdAt);
+  //   const formattedDate = date.toLocaleDateString();
+  //   const formattedTime = date.toLocaleTimeString();
+  //   todoItems.push(
+      // <View style={styles.itemContainer}>
+      //   <Text style={styles.title}>{item.title}</Text>
+      //   <Text style={styles.description}>{item.description}</Text>
+      //   <Text style={styles.meta}>
+      //     By: {item.user} - Comment: {item.commentCount}
+      //   </Text>
+      //   <Text style={styles.meta}>
+      //     {formattedDate} {formattedTime}
+      //   </Text>
+      // </View>
+  //   );
+  // }
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Welcome to the Home Screen!</Text>
+      <Text style={styles.header}>Todo List (For Loop)</Text>
+      <FlatList
+        data={data}
+        renderItem={renderItem}
+        keyExtractor={(item) => item._id}/>
+      {}
     </View>
   );
 };
@@ -12,11 +138,34 @@ const HomeScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+    padding: 10,
+  },
+  header: {
+    fontSize: 24,
+    fontWeight: "bold",
+    marginVertical: 10,
+    textAlign: "center",
+  },
+  itemContainer: {
+    padding: 10,
+    marginVertical: 5,
+    marginBottom: 15,
+    borderWidth: 1,
+    borderColor: "#000",
+    borderRadius: 5,
+    backgroundColor: "#fff",
   },
   title: {
-    fontSize: 24,
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+  description: {
+    fontSize: 14,
+    marginVertical: 5,
+  },
+  meta: {
+    fontSize: 12,
+    color: "#666",
   },
 });
 
